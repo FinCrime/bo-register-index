@@ -78,7 +78,7 @@ Italy, Spain, Belgium, Sweden, Malaysia, South Korea, New Zealand, Saudi Arabia,
 
 ### Browse the Data
 
-Visit the live site: **[vikas.github.io/bo-register-index](https://vikas.github.io/bo-register-index)**
+Visit the live site: **[FinCrime.github.io/bo-register-index](https://FinCrime.github.io/bo-register-index)**
 
 ### Use the JSON Directly
 
