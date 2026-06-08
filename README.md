@@ -86,7 +86,7 @@ The dataset lives in `data/registers.json`. You can:
 
 **Fetch in JavaScript:**
 ```javascript
-const response = await fetch('https://raw.githubusercontent.com/vikas-aml/bo-register-index/main/data/registers.json');
+const response = await fetch('https://raw.githubusercontent.com/FinCrime-aml/bo-register-index/main/data/registers.json');
 const data = await response.json();
 const registers = data.registers;
 
@@ -104,7 +104,7 @@ const withApi = registers.filter(r => r.api_available === true);
 ```python
 import requests
 
-url = "https://raw.githubusercontent.com/vikas-aml/bo-register-index/main/data/registers.json"
+url = "https://raw.githubusercontent.com/fincrime/bo-register-index/main/data/registers.json"
 data = requests.get(url).json()
 registers = data["registers"]
 
@@ -169,7 +169,7 @@ MIT — see [`LICENSE`](LICENSE)
 
 ## About the Maintainer
 
-Built and maintained by **Vikas** — AML compliance analyst, financial crime educator at [AML with Vikas](https://kidddoo12.github.io/kyc-aml-education), and CAMS candidate.
+Built and maintained by **Vikas** 
 
 *"The goal is simple: any analyst anywhere should be able to answer 'can I verify beneficial ownership in this jurisdiction?' in under 30 seconds."*
 
