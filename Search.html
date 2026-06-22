@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register Search · BO Register Index</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0b0f14;
+    --surface: #111820;
+    --border: #1e2a36;
+    --border-bright: #2e3f52;
+    --text: #c8d6e5;
+    --text-dim: #546e87;
+    --text-bright: #e8f2ff;
+    --accent: #00c2ff;
+    --accent-dim: rgba(0,194,255,0.12);
+    --green: #00e5a0;
+    --yellow: #f5c542;
+    --red: #ff5f5f;
+    --orange: #ff9f43;
+    --purple: #b388ff;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo-block { display: flex; flex-direction: column; gap: 2px; }
+  .logo-block .site { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; }
+  .logo-block .page-title { font-size: 18px; font-weight: 600; color: var(--text-bright); letter-spacing: -0.3px; }
+  .header-badge {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 10px;
+    background: var(--accent-dim);
+    color: var(--accent);
+    border: 1px solid rgba(0,194,255,0.25);
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    height: calc(100vh - 61px);
+  }
+
+  /* ── Sidebar ── */
+  aside {
+    border-right: 1px solid var(--border);
+    padding: 24px 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .search-wrap { position: relative; }
+  .search-wrap input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border-bright);
+    color: var(--text-bright);
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 9px 12px 9px 36px;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-wrap input::placeholder { color: var(--text-dim); }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    pointer-events: none;
+  }
+
+  .filter-group { display: flex; flex-direction: column; gap: 10px; }
+  .filter-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .pill-group { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 4px 9px;
+    border-radius: 3px;
+    border: 1px solid var(--border-bright);
+    color: var(--text-dim);
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.12s;
+    user-select: none;
+  }
+  .pill:hover { border-color: var(--accent); color: var(--accent); }
+  .pill.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 7px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: border-color 0.12s;
+  }
+  .toggle-row:hover { border-color: var(--border-bright); }
+  .toggle-row.active { border-color: var(--green); background: rgba(0,229,160,0.06); }
+  .toggle-text { font-size: 12px; color: var(--text); }
+  .toggle-row.active .toggle-text { color: var(--green); }
+  .toggle-dot {
+    width: 28px; height: 16px;
+    background: var(--border-bright);
+    border-radius: 8px;
+    position: relative;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .toggle-row.active .toggle-dot { background: var(--green); }
+  .toggle-dot::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 12px; height: 12px;
+    background: white;
+    border-radius: 50%;
+    transition: left 0.15s;
+  }
+  .toggle-row.active .toggle-dot::after { left: 14px; }
+
+  .clear-btn {
+    font-size: 11px;
+    color: var(--text-dim);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: var(--sans);
+    padding: 0;
+    text-align: left;
+  }
+  .clear-btn:hover { color: var(--accent); }
+
+  /* ── Main Panel ── */
+  main {
+    overflow-y: auto;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .results-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .results-count {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .results-count span { color: var(--accent); font-weight: 600; }
+
+  /* ── Cards ── */
+  .cards { display: flex; flex-direction: column; gap: 10px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .card:hover { border-color: var(--border-bright); background: #13202d; }
+  .card.expanded { border-color: var(--accent); }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .flag { font-size: 22px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+  .card-meta { flex: 1; min-width: 0; }
+  .card-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-bright);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-sub {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    margin-top: 1px;
+  }
+  .card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .badge-public    { color: var(--green);  border-color: rgba(0,229,160,0.3);  background: rgba(0,229,160,0.07); }
+  .badge-paid      { color: var(--yellow); border-color: rgba(245,197,66,0.3); background: rgba(245,197,66,0.07); }
+  .badge-restricted{ color: var(--orange); border-color: rgba(255,159,67,0.3); background: rgba(255,159,67,0.07); }
+  .badge-gov       { color: var(--purple); border-color: rgba(179,136,255,0.3);background: rgba(179,136,255,0.07); }
+  .badge-none      { color: var(--red);    border-color: rgba(255,95,95,0.3);   background: rgba(255,95,95,0.07); }
+  .badge-leg       { color: var(--text-dim);border-color: var(--border-bright); background: transparent; }
+  .badge-api       { color: var(--accent); border-color: rgba(0,194,255,0.3);  background: rgba(0,194,255,0.07); }
+  .badge-fatf      { color: var(--text-dim);border-color: var(--border-bright); background: transparent; }
+  .badge-compliant    { color: var(--green); border-color: rgba(0,229,160,0.3);  background: rgba(0,229,160,0.07); }
+  .badge-non-compliant{ color: var(--red);   border-color: rgba(255,95,95,0.3);   background: rgba(255,95,95,0.07); }
+
+  .card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .quality-score {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .quality-score span {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-bright);
+  }
+  .expand-icon {
+    font-size: 16px;
+    color: var(--text-dim);
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+  .card.expanded .expand-icon { transform: rotate(180deg); color: var(--accent); }
+
+  /* ── Expanded Detail ── */
+  .card-detail {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .card.expanded .card-detail { display: block; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    margin-bottom: 12px;
+  }
+  .detail-item { display: flex; flex-direction: column; gap: 2px; }
+  .detail-key {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .detail-val {
+    font-size: 12px;
+    color: var(--text-bright);
+  }
+
+  .notes-block {
+    background: rgba(0,0,0,0.3);
+    border-left: 2px solid var(--accent);
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 10px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .register-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid rgba(0,194,255,0.3);
+    border-radius: 3px;
+    transition: background 0.12s;
+  }
+  .register-link:hover { background: var(--accent-dim); }
+
+  /* ── Empty / Loading ── */
+  .state-msg {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .state-msg .emoji { font-size: 32px; display: block; margin-bottom: 12px; }
+
+  /* ── Sort bar ── */
+  .sort-select {
+    margin-left: auto;
+    background: var(--surface);
+    border: 1px solid var(--border-bright);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+  .sort-select option { background: var(--surface); }
+
+  @media (max-width: 700px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+    .detail-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-block">
+    <span class="site">BO Register Index</span>
+    <span class="page-title">Register Search</span>
+  </div>
+  <div class="header-badge">v1.0 · 20 Jurisdictions</div>
+</header>
+
+<div class="layout">
+  <aside>
+    <div class="search-wrap">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Country, ISO code…" autocomplete="off" spellcheck="false">
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-label">Register Status</div>
+      <div class="pill-group" id="statusFilters">
+        <div class="pill" data-val="public">Public</div>
+        <div class="pill" data-val="public_paid">Paid</div>
+        <div class="pill" data-val="restricted">Restricted</div>
+        <div class="pill" data-val="government_only">Gov Only</div>
+        <div class="pill" data-val="legislation_only">Legislation</div>
+        <div class="pill" data-val="none">None</div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-label">FATF R24 Rating</div>
+      <div class="pill-group" id="fatfFilters">
+        <div class="pill" data-val="compliant">Compliant</div>
+        <div class="pill" data-val="largely_compliant">Largely C.</div>
+        <div class="pill" data-val="partially_compliant">Partially C.</div>
+        <div class="pill" data-val="non_compliant">Non-Compliant</div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-label">Features</div>
+      <div class="toggle-row" id="apiToggle">
+        <span class="toggle-text">API Available</span>
+        <div class="toggle-dot"></div>
+      </div>
+      <div class="toggle-row" id="freeToggle">
+        <span class="toggle-text">Free Access Only</span>
+        <div class="toggle-dot"></div>
+      </div>
+      <div class="toggle-row" id="trustToggle">
+        <span class="toggle-text">Trusts Covered</span>
+        <div class="toggle-dot"></div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <div class="filter-label">Region</div>
+      <div class="pill-group" id="regionFilters"></div>
+    </div>
+
+    <button class="clear-btn" onclick="clearFilters()">↺ Clear all filters</button>
+  </aside>
+
+  <main>
+    <div class="results-bar">
+      <div class="results-count" id="resultsCount">Loading…</div>
+      <select class="sort-select" id="sortSelect" onchange="render()">
+        <option value="name">Sort: Name A–Z</option>
+        <option value="quality">Sort: Quality Score ↓</option>
+        <option value="threshold">Sort: UBO Threshold ↑</option>
+      </select>
+    </div>
+    <div class="cards" id="cards">
+      <div class="state-msg"><span class="emoji">⏳</span>Fetching register data…</div>
+    </div>
+  </main>
+</div>
+
+<script>
+// ── Embedded fallback data matching schema ──────────────────────────────────
+// Loaded first; replaced with live JSON if fetch succeeds.
+const FALLBACK = [
+  { country: "United Kingdom", iso_code: "GB", flag: "🇬🇧", region: "FATF Core",
+    register_status: "public", access_type: "free", api_available: true,
+    ubo_threshold_percent: 25, fatf_r24_rating: "largely_compliant",
+    data_quality_score: 5, trusts_covered: true, register_url: "https://find-and-update.company-information.service.gov.uk/",
+    quality_notes: "Companies House provides free, full public access with a REST API. Timeliness is strong; accuracy varies as filings are self-certified. PSC register covers trusts via trust structures." },
+  { country: "United States", iso_code: "US", flag: "🇺🇸", region: "FATF Core",
+    register_status: "government_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "partially_compliant",
+    data_quality_score: 2, trusts_covered: false, register_url: "https://boiefiling.fincen.gov/",
+    quality_notes: "FinCEN BOI register launched Jan 2024 but is law-enforcement-only. No public access. Implementation has faced legal challenges. Trusts largely excluded." },
+  { country: "Germany", iso_code: "DE", flag: "🇩🇪", region: "FATF Core",
+    register_status: "restricted", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "largely_compliant",
+    data_quality_score: 3, trusts_covered: false, register_url: "https://www.transparenzregister.de/",
+    quality_notes: "Transparenzregister is technically public but requires registration and legitimate interest following ECJ ruling. Access effectively restricted in practice." },
+  { country: "France", iso_code: "FR", flag: "🇫🇷", region: "FATF Core",
+    register_status: "restricted", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "largely_compliant",
+    data_quality_score: 3, trusts_covered: false, register_url: "https://www.infogreffe.fr/",
+    quality_notes: "Post-ECJ 2022, French register requires 'legitimate interest' — FATF MER noted compliance was uneven. Infogreffe is the primary access portal." },
+  { country: "Netherlands", iso_code: "NL", flag: "🇳🇱", region: "FATF Core",
+    register_status: "restricted", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "largely_compliant",
+    data_quality_score: 3, trusts_covered: false, register_url: "https://www.kvk.nl/",
+    quality_notes: "KVK UBO register restricted post-ECJ 2022. Access requires demonstration of legitimate purpose. API previously existed, withdrawn after ruling." },
+  { country: "Canada", iso_code: "CA", flag: "🇨🇦", region: "FATF Core",
+    register_status: "public", access_type: "free", api_available: true,
+    ubo_threshold_percent: 25, fatf_r24_rating: "largely_compliant",
+    data_quality_score: 4, trusts_covered: false, register_url: "https://ised-isde.canada.ca/cc/lgcy/fdrl/srch/",
+    quality_notes: "Federal BO register launched 2023. Publicly searchable; API available via Open Government. Provincial entities may require separate checks. Trusts excluded from federal scope." },
+  { country: "Australia", iso_code: "AU", flag: "🇦🇺", region: "FATF Core",
+    register_status: "legislation_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "partially_compliant",
+    data_quality_score: 1, trusts_covered: false, register_url: "https://www.asic.gov.au/",
+    quality_notes: "Treasury Laws Amendment (Enhancing Tax Integrity and Supporting Business) Act 2023 passed but operational launch delayed. Register not yet live as of 2025." },
+  { country: "Singapore", iso_code: "SG", flag: "🇸🇬", region: "FATF Core",
+    register_status: "government_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "largely_compliant",
+    data_quality_score: 3, trusts_covered: false, register_url: "https://www.acra.gov.sg/",
+    quality_notes: "ACRA holds BO data submitted by entities. Not publicly searchable; accessible by law enforcement and in some cases by obliged entities with legitimate need. Nominee arrangements common." },
+  { country: "India", iso_code: "IN", flag: "🇮🇳", region: "APAC",
+    register_status: "government_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 10, fatf_r24_rating: "partially_compliant",
+    data_quality_score: 2, trusts_covered: false, register_url: "https://www.mca.gov.in/",
+    quality_notes: "MCA21 system holds SBO declarations. Lower threshold (10%) than FATF norm. Public cannot search BO data; only regulatory access. Compliance rates uneven." },
+  { country: "Hong Kong", iso_code: "HK", flag: "🇭🇰", region: "APAC",
+    register_status: "government_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "partially_compliant",
+    data_quality_score: 2, trusts_covered: false, register_url: "https://www.cr.gov.hk/",
+    quality_notes: "Significant Controller Register held at registered office, not a central register. Law enforcement access only. FATF MER flagged lack of central repository as gap." },
+  { country: "Cayman Islands", iso_code: "KY", flag: "🇰🇾", region: "Offshore",
+    register_status: "government_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "partially_compliant",
+    data_quality_score: 2, trusts_covered: true, register_url: "https://www.cima.ky/",
+    quality_notes: "BOSS (Beneficial Ownership Secure Search) system operational since 2017. Data only accessible to law enforcement/FIU via CIMA. No public access. Trusts in scope." },
+  { country: "British Virgin Islands", iso_code: "VG", flag: "🇻🇬", region: "Offshore",
+    register_status: "government_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "non_compliant",
+    data_quality_score: 2, trusts_covered: false, register_url: "https://www.bvifsc.vg/",
+    quality_notes: "BO register operational but restricted. Under UK OT commitments to move toward public registers. FATF MER and CFATF assessments note ongoing gaps in verification." },
+  { country: "Panama", iso_code: "PA", flag: "🇵🇦", region: "Offshore",
+    register_status: "none", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: null, fatf_r24_rating: "non_compliant",
+    data_quality_score: 1, trusts_covered: false, register_url: "https://www.rp.gob.pa/",
+    quality_notes: "No functional BO register. Panama Papers exposed severe gaps. Limited reform progress post-2016. FATF GAFILAT follow-up ratings consistently weak on R.24." },
+  { country: "Jersey", iso_code: "JE", flag: "🇯🇪", region: "Offshore",
+    register_status: "government_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "largely_compliant",
+    data_quality_score: 3, trusts_covered: true, register_url: "https://www.jerseyfsc.org/",
+    quality_notes: "JFSC holds central BO register accessible to law enforcement. Trusts in scope. Public register commitment subject to MONEYVAL evaluation outcomes." },
+  { country: "Mauritius", iso_code: "MU", flag: "🇲🇺", region: "Offshore",
+    register_status: "government_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 20, fatf_r24_rating: "partially_compliant",
+    data_quality_score: 2, trusts_covered: false, register_url: "https://www.fscmauritius.org/",
+    quality_notes: "FSC holds BO data; 20% threshold. Removed from FATF grey list 2022 but practical access remains restricted. Enforcement gaps noted in ESAAMLG review." },
+  { country: "Switzerland", iso_code: "CH", flag: "🇨🇭", region: "FATF Other",
+    register_status: "none", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "partially_compliant",
+    data_quality_score: 1, trusts_covered: false, register_url: "https://www.zefix.ch/",
+    quality_notes: "No central BO register. Bearer shares abolished. Companies self-maintain shareholder lists. Commercial register (Zefix) has no BO data. FATF MER 2016 and follow-up critical." },
+  { country: "Japan", iso_code: "JP", flag: "🇯🇵", region: "FATF Other",
+    register_status: "none", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "partially_compliant",
+    data_quality_score: 1, trusts_covered: false, register_url: "https://www.nta.go.jp/",
+    quality_notes: "No public BO register. Corporate registry (Legal Affairs Bureau) has shareholder data but no UBO disclosure system. FATF APG MER noted R.24 as weak." },
+  { country: "South Africa", iso_code: "ZA", flag: "🇿🇦", region: "FATF Other",
+    register_status: "legislation_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "partially_compliant",
+    data_quality_score: 1, trusts_covered: false, register_url: "https://www.cipc.co.za/",
+    quality_notes: "Companies and Intellectual Property Commission (CIPC) mandated to build BO register. General Laws Amendment Act 2022 framework established; operational rollout ongoing." },
+  { country: "Brazil", iso_code: "BR", flag: "🇧🇷", region: "FATF Other",
+    register_status: "public", access_type: "free", api_available: true,
+    ubo_threshold_percent: 25, fatf_r24_rating: "largely_compliant",
+    data_quality_score: 3, trusts_covered: false, register_url: "https://www.receita.fazenda.gov.br/",
+    quality_notes: "Receita Federal (CadCPF/CNPJ system) provides public entity data. BO data increasingly disclosed via CNPJ. API exists but requires interpretation. Coverage uneven across entity types." },
+  { country: "UAE", iso_code: "AE", flag: "🇦🇪", region: "Other",
+    register_status: "government_only", access_type: "restricted", api_available: false,
+    ubo_threshold_percent: 25, fatf_r24_rating: "non_compliant",
+    data_quality_score: 2, trusts_covered: false, register_url: "https://www.mohre.gov.ae/",
+    quality_notes: "Cabinet Resolution No.58 of 2020 requires BO submission to local authorities. FATF greylisted 2022, exited 2024 after reform commitments. Practical verification still difficult." }
+];
+
+// ── State ──────────────────────────────────────────────────────────────────
+let allData = [];
+let activeStatus = new Set();
+let activeFatf = new Set();
+let apiOnly = false;
+let freeOnly = false;
+let trustsOnly = false;
+let activeRegions = new Set();
+let expandedCard = null;
+
+// ── Init ───────────────────────────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/fincrime/bo-register-index/main/data/registers.json');
+    if (res.ok) {
+      const json = await res.json();
+      allData = json.registers || json;
+    } else { throw new Error(); }
+  } catch {
+    allData = FALLBACK;
+  }
+
+  // Populate region filters
+  const regions = [...new Set(allData.map(r => r.region).filter(Boolean))];
+  const rg = document.getElementById('regionFilters');
+  rg.innerHTML = regions.map(r =>
+    `<div class="pill" data-val="${r}" onclick="toggleRegion('${r}',this)">${r}</div>`
+  ).join('');
+
+  render();
+  bindUI();
+}
+
+// ── Bind inputs ────────────────────────────────────────────────────────────
+function bindUI() {
+  document.getElementById('searchInput').addEventListener('input', render);
+
+  document.querySelectorAll('#statusFilters .pill').forEach(p =>
+    p.addEventListener('click', () => toggleSet(activeStatus, p.dataset.val, p, render)));
+
+  document.querySelectorAll('#fatfFilters .pill').forEach(p =>
+    p.addEventListener('click', () => toggleSet(activeFatf, p.dataset.val, p, render)));
+
+  document.getElementById('apiToggle').addEventListener('click', function() {
+    apiOnly = !apiOnly; this.classList.toggle('active', apiOnly); render();
+  });
+  document.getElementById('freeToggle').addEventListener('click', function() {
+    freeOnly = !freeOnly; this.classList.toggle('active', freeOnly); render();
+  });
+  document.getElementById('trustToggle').addEventListener('click', function() {
+    trustsOnly = !trustsOnly; this.classList.toggle('active', trustsOnly); render();
+  });
+}
+
+function toggleSet(set, val, el, cb) {
+  if (set.has(val)) { set.delete(val); el.classList.remove('active'); }
+  else { set.add(val); el.classList.add('active'); }
+  cb();
+}
+
+function toggleRegion(val, el) {
+  toggleSet(activeRegions, val, el, render);
+}
+
+function clearFilters() {
+  activeStatus.clear(); activeFatf.clear(); activeRegions.clear();
+  apiOnly = freeOnly = trustsOnly = false;
+  document.querySelectorAll('.pill.active').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.toggle-row.active').forEach(t => t.classList.remove('active'));
+  document.getElementById('searchInput').value = '';
+  render();
+}
+
+// ── Filter + Sort ──────────────────────────────────────────────────────────
+function filter() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  return allData.filter(r => {
+    if (q && !r.country.toLowerCase().includes(q) && !(r.iso_code||'').toLowerCase().includes(q)) return false;
+    if (activeStatus.size && !activeStatus.has(r.register_status)) return false;
+    if (activeFatf.size && !activeFatf.has(r.fatf_r24_rating)) return false;
+    if (apiOnly && !r.api_available) return false;
+    if (freeOnly && r.access_type !== 'free') return false;
+    if (trustsOnly && !r.trusts_covered) return false;
+    if (activeRegions.size && !activeRegions.has(r.region)) return false;
+    return true;
+  });
+}
+
+function sorted(arr) {
+  const s = document.getElementById('sortSelect').value;
+  return [...arr].sort((a, b) => {
+    if (s === 'quality') return (b.data_quality_score||0) - (a.data_quality_score||0);
+    if (s === 'threshold') return ((a.ubo_threshold_percent||99)) - ((b.ubo_threshold_percent||99));
+    return (a.country||'').localeCompare(b.country||'');
+  });
+}
+
+// ── Render ─────────────────────────────────────────────────────────────────
+function render() {
+  const results = sorted(filter());
+  const container = document.getElementById('cards');
+  const count = document.getElementById('resultsCount');
+
+  count.innerHTML = `<span>${results.length}</span> of ${allData.length} jurisdictions`;
+
+  if (results.length === 0) {
+    container.innerHTML = '<div class="state-msg"><span class="emoji">🔍</span>No results match your filters.</div>';
+    return;
+  }
+
+  container.innerHTML = results.map(r => cardHTML(r)).join('');
+
+  // Re-bind expand
+  container.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', function() {
+      const isOpen = this.classList.contains('expanded');
+      container.querySelectorAll('.card.expanded').forEach(c => c.classList.remove('expanded'));
+      if (!isOpen) this.classList.add('expanded');
+    });
+  });
+}
+
+// ── Card HTML ──────────────────────────────────────────────────────────────
+const STATUS_LABEL = {
+  public: 'Public',
+  public_paid: 'Public (Paid)',
+  restricted: 'Restricted',
+  government_only: 'Gov Only',
+  legislation_only: 'Legislation',
+  none: 'No Register',
+  planned: 'Planned'
+};
+const STATUS_CLS = {
+  public: 'badge-public', public_paid: 'badge-paid', restricted: 'badge-restricted',
+  government_only: 'badge-gov', legislation_only: 'badge-leg', none: 'badge-none', planned: 'badge-leg'
+};
+const FATF_CLS = {
+  compliant: 'badge-compliant', largely_compliant: 'badge-compliant',
+  partially_compliant: 'badge-paid', non_compliant: 'badge-non-compliant'
+};
+const FATF_LABEL = {
+  compliant: 'Compliant', largely_compliant: 'Largely C.',
+  partially_compliant: 'Partially C.', non_compliant: 'Non-Compliant'
+};
+
+function cardHTML(r) {
+  const statusCls = STATUS_CLS[r.register_status] || 'badge-leg';
+  const statusLbl = STATUS_LABEL[r.register_status] || r.register_status;
+  const fatfCls = FATF_CLS[r.fatf_r24_rating] || 'badge-leg';
+  const fatfLbl = FATF_LABEL[r.fatf_r24_rating] || r.fatf_r24_rating;
+
+  const apiB = r.api_available ? `<span class="badge badge-api">API</span>` : '';
+  const trustB = r.trusts_covered ? `<span class="badge badge-leg">Trusts ✓</span>` : '';
+
+  const stars = r.data_quality_score ? `${'●'.repeat(r.data_quality_score)}${'○'.repeat(5-r.data_quality_score)}` : '—';
+
+  const detailItems = [
+    ['Access Type', r.access_type || '—'],
+    ['UBO Threshold', r.ubo_threshold_percent != null ? `${r.ubo_threshold_percent}%` : '—'],
+    ['Region', r.region || '—'],
+    ['ISO Code', r.iso_code || '—'],
+    ['Trusts Covered', r.trusts_covered ? 'Yes' : 'No'],
+    ['API', r.api_available ? 'Yes' : 'No'],
+  ].map(([k,v]) => `<div class="detail-item"><div class="detail-key">${k}</div><div class="detail-val">${v}</div></div>`).join('');
+
+  const notesBlock = r.quality_notes
+    ? `<div class="notes-block">${r.quality_notes}</div>` : '';
+
+  const linkBlock = r.register_url
+    ? `<a href="${r.register_url}" target="_blank" rel="noopener" class="register-link" onclick="event.stopPropagation()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Open Register
+       </a>` : '';
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <div class="flag">${r.flag || ''}</div>
+        <div class="card-meta">
+          <div class="card-name">${r.country}</div>
+          <div class="card-sub">${r.iso_code || ''} · ${r.region || ''}</div>
+          <div class="card-badges">
+            <span class="badge ${statusCls}">${statusLbl}</span>
+            <span class="badge ${fatfCls}">${fatfLbl}</span>
+            ${apiB}${trustB}
+          </div>
+        </div>
+        <div class="card-right">
+          <div class="quality-score"><span>${r.data_quality_score || '?'}</span>/5</div>
+          <div class="expand-icon">▾</div>
+        </div>
+      </div>
+      <div class="card-detail">
+        <div class="detail-grid">${detailItems}</div>
+        ${notesBlock}
+        ${linkBlock}
+      </div>
+    </div>`;
+}
+
+init();
+</script>
+</body>
+</html>
