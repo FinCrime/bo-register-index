@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanctions — Complete Guide for AML Professionals</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+  :root {
+    --bg: #0c0f14;
+    --surface: #131720;
+    --border: #1e2535;
+    --accent: #e8c55a;
+    --accent2: #4ecdc4;
+    --accent3: #ff6b6b;
+    --accent4: #a78bfa;
+    --text: #d4dae8;
+    --muted: #6b7591;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(12,15,20,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; align-items: center; gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav .brand {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-right: 20px;
+    border-right: 1px solid var(--border);
+    margin-right: 8px;
+  }
+  nav button {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--sans); font-size: 12px; font-weight: 600;
+    color: var(--muted);
+    padding: 14px 12px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  nav button:hover { color: var(--text); }
+  nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* LAYOUT */
+  main { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  section { display: none; }
+  section.active { display: block; }
+
+  /* HERO */
+  .hero {
+    padding: 48px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .hero-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700; line-height: 1.15;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--muted); max-width: 640px; font-size: 15px; }
+
+  /* CARDS */
+  h2 {
+    font-size: 20px; font-weight: 700; color: #fff;
+    margin: 40px 0 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  h2::before {
+    content: ''; display: block;
+    width: 3px; height: 20px;
+    background: var(--accent); border-radius: 2px;
+    flex-shrink: 0;
+  }
+  h3 { font-size: 14px; font-weight: 700; color: var(--accent2); margin: 24px 0 8px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  p { margin-bottom: 12px; color: var(--text); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 700; color: #fff;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tag {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 3px;
+  }
+  .tag-gold { background: rgba(232,197,90,0.12); color: var(--accent); }
+  .tag-teal { background: rgba(78,205,196,0.12); color: var(--accent2); }
+  .tag-red { background: rgba(255,107,107,0.12); color: var(--accent3); }
+  .tag-purple { background: rgba(167,139,250,0.12); color: var(--accent4); }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 16px; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
+  th {
+    background: var(--border); color: var(--accent);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 10px 14px; text-align: left;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* CALLOUTS */
+  .callout {
+    border-left: 3px solid;
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+  .callout-gold { border-color: var(--accent); background: rgba(232,197,90,0.06); }
+  .callout-red { border-color: var(--accent3); background: rgba(255,107,107,0.06); }
+  .callout-teal { border-color: var(--accent2); background: rgba(78,205,196,0.06); }
+  .callout-purple { border-color: var(--accent4); background: rgba(167,139,250,0.06); }
+  .callout strong { color: #fff; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* LIST */
+  ul { padding-left: 0; list-style: none; }
+  ul li {
+    padding: 5px 0 5px 20px;
+    position: relative;
+    color: var(--text);
+    font-size: 14px;
+  }
+  ul li::before {
+    content: '›';
+    position: absolute; left: 0;
+    color: var(--accent); font-weight: 700;
+  }
+
+  /* FLOW DIAGRAM */
+  .flow {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 8px; margin: 16px 0;
+  }
+  .flow-step {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 10px 14px;
+    font-size: 12px; font-weight: 600; color: #fff;
+    text-align: center;
+  }
+  .flow-arrow { color: var(--accent); font-size: 18px; }
+
+  /* STAT BOXES */
+  .stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .stat-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px 20px;
+    flex: 1; min-width: 140px;
+  }
+  .stat-num {
+    font-family: var(--mono); font-size: 22px; font-weight: 600;
+    color: var(--accent); line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 20px;
+    margin-right: 4px; margin-bottom: 4px;
+  }
+  .badge-gold { background: rgba(232,197,90,0.15); color: var(--accent); border: 1px solid rgba(232,197,90,0.3); }
+  .badge-teal { background: rgba(78,205,196,0.15); color: var(--accent2); border: 1px solid rgba(78,205,196,0.3); }
+  .badge-red { background: rgba(255,107,107,0.15); color: var(--accent3); border: 1px solid rgba(255,107,107,0.3); }
+  .badge-purple { background: rgba(167,139,250,0.15); color: var(--accent4); border: 1px solid rgba(167,139,250,0.3); }
+
+  /* ACCORDION */
+  details { margin-bottom: 8px; }
+  summary {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 12px 16px; border-radius: 6px; cursor: pointer;
+    font-weight: 600; font-size: 13px; color: #fff;
+    list-style: none; display: flex; justify-content: space-between; align-items: center;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; color: var(--accent); font-size: 16px; font-weight: 300; }
+  details[open] summary::after { content: '−'; }
+  details[open] summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; }
+  .details-body {
+    background: rgba(19,23,32,0.5); border: 1px solid var(--border); border-top: none;
+    padding: 16px 18px; border-radius: 0 0 6px 6px;
+    font-size: 13.5px;
+  }
+
+  /* MONO */
+  code {
+    font-family: var(--mono); font-size: 11px;
+    background: rgba(232,197,90,0.1); color: var(--accent);
+    padding: 1px 6px; border-radius: 3px;
+  }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+  /* VERDICT */
+  .verdict {
+    background: linear-gradient(135deg, rgba(232,197,90,0.08), rgba(78,205,196,0.06));
+    border: 1px solid rgba(232,197,90,0.2);
+    border-radius: 10px; padding: 20px 24px; margin: 20px 0;
+  }
+  .verdict-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 8px; font-family: var(--mono); }
+
+  /* CAMS PILL */
+  .cams-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25);
+    border-radius: 20px; padding: 3px 10px;
+    font-size: 10px; color: var(--accent4); font-family: var(--mono); letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .cams-pill::before { content: '🎓'; font-size: 10px; }
+
+  @media (max-width: 600px) {
+    main { padding: 24px 16px 60px; }
+    .hero h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Sanctions 101</div>
+  <button class="active" onclick="showTab('intro')">Intro</button>
+  <button onclick="showTab('types')">Types</button>
+  <button onclick="showTab('authorities')">Authorities</button>
+  <button onclick="showTab('lists')">Lists</button>
+  <button onclick="showTab('programs')">Programs</button>
+  <button onclick="showTab('concepts')">Key Concepts</button>
+  <button onclick="showTab('screening')">Screening</button>
+  <button onclick="showTab('compliance')">Compliance</button>
+  <button onclick="showTab('penalties')">Penalties</button>
+  <button onclick="showTab('cams')">CAMS Prep</button>
+</nav>
+
+<main>
+
+<!-- ═══════════════════ INTRO ═══════════════════ -->
+<section id="intro" class="active">
+  <div class="hero">
+    <div class="hero-tag">Complete Guide · AML Professionals</div>
+    <h1>Everything About<br><span>Financial Sanctions</span></h1>
+    <p>From basics to OFAC enforcement, SDN lists to secondary sanctions — a full-depth reference for compliance analysts, QC reviewers, and CAMS candidates.</p>
+  </div>
+
+  <h2>What Are Sanctions?</h2>
+  <p>Sanctions are <strong style="color:#fff">legal restrictions imposed by a government, group of governments, or international body</strong> that limit or prohibit financial transactions, trade, or economic activity with specific countries, individuals, entities, or sectors.</p>
+  <p>They are a foreign policy and national security tool — a way to apply economic pressure without military force.</p>
+
+  <div class="callout callout-gold">
+    <strong>Plain Language Definition</strong>
+    Sanctions = a government saying "you are not allowed to do business with this person/country/entity." If you do anyway, you face massive fines or criminal prosecution.
+  </div>
+
+  <h2>Why Do Sanctions Exist?</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🎯 Primary Purposes</div>
+      <ul>
+        <li>Deter and disrupt weapons proliferation (WMD, nuclear)</li>
+        <li>Counter terrorism financing</li>
+        <li>Respond to human rights violations</li>
+        <li>Combat drug trafficking & narco-terrorism</li>
+        <li>Punish aggression / territorial invasion</li>
+        <li>Fight corruption and kleptocracy</li>
+        <li>Pressure rogue states toward policy change</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 Legal Basis (US Example)</div>
+      <ul>
+        <li>International Emergency Economic Powers Act (IEEPA)</li>
+        <li>Trading with the Enemy Act (TWEA)</li>
+        <li>Foreign Narcotics Kingpin Designation Act</li>
+        <li>Executive Orders issued by the President</li>
+        <li>UN Security Council Resolutions (binding on all member states)</li>
+        <li>CAATSA (Countering America's Adversaries Through Sanctions Act)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-num">12,000+</div><div class="stat-label">SDN entries (OFAC)</div></div>
+    <div class="stat-box"><div class="stat-num">30+</div><div class="stat-label">OFAC sanctions programs</div></div>
+    <div class="stat-box"><div class="stat-num">$1.3B</div><div class="stat-label">BNP Paribas OFAC penalty (2015)</div></div>
+    <div class="stat-box"><div class="stat-num">~200</div><div class="stat-label">Sanctioned countries/regions</div></div>
+  </div>
+
+  <h2>Sanctions vs. AML — Key Difference</h2>
+  <div class="card">
+    <table>
+      <tr><th>Factor</th><th>AML</th><th>Sanctions</th></tr>
+      <tr><td>Focus</td><td>Detecting & reporting suspicious activity (SAR)</td><td>Blocking/rejecting prohibited transactions</td></tr>
+      <tr><td>Standard</td><td>Reasonable suspicion / risk-based</td><td>Strict liability — intent doesn't matter</td></tr>
+      <tr><td>Response</td><td>File SAR, monitor, escalate</td><td>Block funds, reject transaction, report to authority</td></tr>
+      <tr><td>Regulator (US)</td><td>FinCEN, banking regulators</td><td>OFAC (Treasury Dept)</td></tr>
+      <tr><td>Penalty</td><td>Fines, consent orders</td><td>Civil + criminal penalties up to $1M+ per violation</td></tr>
+    </table>
+  </div>
+
+  <div class="callout callout-red">
+    <strong>⚠️ Critical Point</strong>
+    Sanctions compliance is strict liability. This means even an accidental, unknowing violation can attract penalties. "I didn't know" is NOT a complete defence — though it affects penalty severity.
+  </div>
+</section>
+
+<!-- ═══════════════════ TYPES ═══════════════════ -->
+<section id="types">
+  <div class="hero">
+    <div class="hero-tag">Module 2</div>
+    <h1>Types of <span>Sanctions</span></h1>
+    <p>Sanctions come in many forms. Understanding their structure helps you identify exposure during screening and investigation.</p>
+  </div>
+
+  <h2>By Target (Who/What is Restricted)</h2>
+
+  <details open>
+    <summary>1. Country / Comprehensive Sanctions</summary>
+    <div class="details-body">
+      <p>Blanket prohibition on virtually all transactions with a specific country. The most severe form.</p>
+      <div class="grid-2" style="margin-top:12px">
+        <div>
+          <strong style="color:#fff; font-size:13px;">Current US Comprehensive Programs:</strong>
+          <ul style="margin-top:8px">
+            <li><strong>Cuba</strong> — Cuban Assets Control Regulations (CACR)</li>
+            <li><strong>Iran</strong> — Iranian Transactions & Sanctions Regulations (ITSR)</li>
+            <li><strong>North Korea</strong> — North Korea Sanctions Regulations</li>
+            <li><strong>Syria</strong> — Syrian Sanctions Regulations</li>
+            <li><strong>Crimea/Russia</strong> — expanded post-2022</li>
+          </ul>
+        </div>
+        <div>
+          <strong style="color:#fff; font-size:13px;">What's banned:</strong>
+          <ul style="margin-top:8px">
+            <li>All imports/exports</li>
+            <li>All financial transactions</li>
+            <li>Investment in the country</li>
+            <li>New business development</li>
+            <li>Transfer of funds to or from</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout callout-red" style="margin-top:12px">
+        <strong>Exception Note</strong>
+        Even comprehensive sanctions have limited exemptions — food, medicine, informational materials, and specific licensed activities may be permitted.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>2. Targeted / Designated Party Sanctions (Smart Sanctions)</summary>
+    <div class="details-body">
+      <p>Instead of targeting an entire country, these sanction <strong>specific individuals, entities, or vessels</strong> deemed a threat. This is the most common modern form.</p>
+      <p>Examples: sanctioning a specific Russian oligarch, an Iranian Revolutionary Guard General, a Mexican cartel leader, or a North Korean front company.</p>
+      <div class="callout callout-teal" style="margin-top:12px">
+        <strong>Why "Smart Sanctions"?</strong>
+        Designed to minimise harm to ordinary citizens while targeting specific bad actors. UN moved to this approach after comprehensive Iraq sanctions in 1990s were blamed for civilian suffering.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>3. Sectoral Sanctions</summary>
+    <div class="details-body">
+      <p>Target specific <strong>sectors of an economy</strong> — not entire countries or individual persons, but certain industries or types of transactions. Primarily used against Russia.</p>
+      <table style="margin-top:12px">
+        <tr><th>Sector</th><th>What's Restricted</th><th>List</th></tr>
+        <tr><td>Energy</td><td>New debt >90 days, equity in specific companies</td><td>SSI (Sectoral Sanctions Identifications)</td></tr>
+        <tr><td>Finance / Banking</td><td>New debt >30 days, equity transactions</td><td>SSI List</td></tr>
+        <tr><td>Defense / Military</td><td>New debt >30 days</td><td>SSI List</td></tr>
+        <tr><td>Defense Tech</td><td>Export restrictions, new debt</td><td>SSI + Commerce Dept</td></tr>
+      </table>
+      <div class="callout callout-gold">
+        <strong>Key Distinction</strong>
+        Being on the SSI list is NOT the same as the SDN list. You can still do most business with SSI-listed entities — only specific transaction types are prohibited. SDN = full block. SSI = limited restriction.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>4. Secondary Sanctions</summary>
+    <div class="details-body">
+      <p>This is the most controversial and extraterritorial type. Secondary sanctions target <strong>non-US persons</strong> who do business with US-sanctioned parties — even if the transaction has no US nexus.</p>
+      <p>US is saying: "If you, a foreign company, do business with Iran — we may sanction you too, and cut you off from the US financial system."</p>
+      <ul style="margin-top:8px">
+        <li>Primary sanction = applies to US persons</li>
+        <li>Secondary sanction = applies to non-US persons who deal with primary sanctioned parties</li>
+        <li>Most prominent under Iran and Russia programs</li>
+        <li>CAATSA (2017) gave US significant secondary sanctions authority vs Russia/Iran/North Korea</li>
+      </ul>
+      <div class="callout callout-red" style="margin-top:12px">
+        <strong>Why This Matters for You</strong>
+        Your payment gateway client processes global transactions. Even if a transaction is between two non-US entities, if one is a secondary sanctions target, your client (even as an India-based processor) may face exposure if USD clearing or US correspondent banking is used.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>5. Trade / Export Sanctions</summary>
+    <div class="details-body">
+      <p>Restrict the <strong>export of specific goods, technology, or services</strong> to designated countries or entities. Often administered by Commerce Department (BIS) rather than Treasury (OFAC).</p>
+      <ul>
+        <li>Dual-use goods (civilian + military use)</li>
+        <li>Military equipment and technology</li>
+        <li>Nuclear technology and materials</li>
+        <li>Software with encryption capabilities</li>
+      </ul>
+      <p style="margin-top:8px">Entity List (Commerce/BIS), Denied Persons List, Unverified List — separate from OFAC but equally important for compliance.</p>
+    </div>
+  </details>
+
+  <h2>By Mechanism (How They Work)</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="tag tag-red">BLOCK</span> Blocking Sanctions</div>
+      <p style="font-size:13px">Funds must be frozen — you cannot process, transfer, or return them without OFAC license. The assets are "blocked" and held in a segregated interest-bearing account.</p>
+      <p style="font-size:13px; color:var(--accent3);">Applies to: SDN-listed parties</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="tag tag-gold">REJECT</span> Rejection Sanctions</div>
+      <p style="font-size:13px">The transaction must be rejected and returned to the originator. Funds are NOT blocked — they go back. Applies to countries/parties not subject to blocking but still restricted.</p>
+      <p style="font-size:13px; color:var(--accent);">Example: transactions involving Crimea region (Ukraine-related)</p>
+    </div>
+  </div>
+
+  <div class="callout callout-gold">
+    <strong>Block vs. Reject — The Key Exam Point</strong>
+    SDN hit = BLOCK (freeze, don't return). Jurisdiction restriction = REJECT (return to sender). Mixing these up is a serious compliance error and a common CAMS question.
+  </div>
+</section>
+
+<!-- ═══════════════════ AUTHORITIES ═══════════════════ -->
+<section id="authorities">
+  <div class="hero">
+    <div class="hero-tag">Module 3</div>
+    <h1>Sanctions <span>Authorities</span></h1>
+    <p>Who imposes sanctions? Every major jurisdiction has its own authority, list, and enforcement mechanism.</p>
+  </div>
+
+  <h2>🇺🇸 United States — OFAC</h2>
+  <div class="card">
+    <div class="card-title">Office of Foreign Assets Control (OFAC)</div>
+    <p style="font-size:13px">Part of the US Department of the Treasury. The most powerful and globally influential sanctions authority. OFAC administers 30+ sanctions programs.</p>
+    <div class="grid-2" style="margin-top:12px">
+      <div>
+        <h3>Who Must Comply</h3>
+        <ul>
+          <li>All US persons (citizens, residents, entities)</li>
+          <li>US-incorporated entities and their foreign branches</li>
+          <li>Non-US persons when transactions touch USD or US financial system</li>
+          <li>Non-US persons under secondary sanctions authority</li>
+        </ul>
+      </div>
+      <div>
+        <h3>OFAC's Key Powers</h3>
+        <ul>
+          <li>Designate individuals/entities to SDN list</li>
+          <li>Issue/deny licenses for prohibited transactions</li>
+          <li>Enforce penalties (civil & criminal)</li>
+          <li>Publish guidance, FAQs, and general licenses</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>🌐 United Nations — UNSC</h2>
+  <div class="card">
+    <div class="card-title">UN Security Council Sanctions Committees</div>
+    <p style="font-size:13px">UN Security Council Resolutions (UNSCRs) impose sanctions binding on ALL 193 UN member states. The UN Consolidated List is the result. UN sanctions committees oversee each program.</p>
+    <ul>
+      <li>Binding under Chapter VII of the UN Charter</li>
+      <li>Every member state must implement in national law</li>
+      <li>Current programs: Al-Qaida, ISIL/Daesh, Taliban, Libya, North Korea, Mali, CAR, Yemen, Sudan, Guinea-Bissau, Iran (nuclear), and others</li>
+      <li>The 1267/1989/2253 Committee oversees Al-Qaida/ISIL</li>
+    </ul>
+    <div class="callout callout-teal" style="margin-top:12px">
+      <strong>Key Point</strong>
+      UN sanctions set the minimum floor. Countries implement these and often go further with their own additional programs (US, EU sanctions are always stricter than UN alone).
+    </div>
+  </div>
+
+  <h2>🇪🇺 European Union</h2>
+  <div class="card">
+    <div class="card-title">European External Action Service (EEAS) + Council of the EU</div>
+    <p style="font-size:13px">EU sanctions are adopted by the Council of the EU (via Common Foreign and Security Policy) and apply to all EU member states. EU maintains its own consolidated list separate from OFAC.</p>
+    <ul>
+      <li>Implemented through EU Council Regulations and Decisions</li>
+      <li>EU Financial Sanctions Files (FSF) — consolidated EU list</li>
+      <li>Post-2022 Russia invasion: EU imposed 10+ packages of sanctions — the most extensive in EU history</li>
+      <li>Major programs: Russia, Iran, Belarus, Myanmar, Syria, Venezuela, Cuba, Zimbabwe, North Korea</li>
+    </ul>
+  </div>
+
+  <h2>🇬🇧 United Kingdom — OFSI</h2>
+  <div class="card">
+    <div class="card-title">Office of Financial Sanctions Implementation (OFSI) — HM Treasury</div>
+    <p style="font-size:13px">Post-Brexit, UK operates its own sanctions regime under the Sanctions and Anti-Money Laundering Act 2018 (SAMLA). OFSI enforces financial sanctions in the UK.</p>
+    <ul>
+      <li>UK maintains own Consolidated List (separate from EU post-Brexit)</li>
+      <li>OFSI issues licenses and enforcement penalties</li>
+      <li>Monetary Penalties up to £1 million or 50% of breach value (whichever higher)</li>
+      <li>UK often mirrors US/EU designations but not always — check all three</li>
+    </ul>
+  </div>
+
+  <h2>Other Key Authorities</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🇦🇺 Australia — AUSTRAC / DFAT</div>
+      <p style="font-size:13px">Department of Foreign Affairs and Trade (DFAT) maintains Australia's sanctions list. AUSTRAC enforces AML/CTF obligations that intersect with sanctions. The Autonomous Sanctions Act 2011 governs.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🇨🇦 Canada — OSFI / GAC</div>
+      <p style="font-size:13px">Global Affairs Canada (GAC) administers sanctions. OSFI (Office of the Superintendent of Financial Institutions) oversees financial sector compliance. United Nations Act and Special Economic Measures Act (SEMA) are key statutes.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🇦🇪 UAE — CBUAE / UAEIA</div>
+      <p style="font-size:13px">Central Bank of the UAE (CBUAE) issues sanctions compliance guidance. UAE implements UN lists and maintains local lists. UAE is a high-risk jurisdiction for sanctions evasion given strategic location. The UAE Executive Office for Control & Non-Proliferation (UAEICIA) oversees designations.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🇮🇳 India — MHA / MEA</div>
+      <p style="font-size:13px">India implements UN sanctions under UAPA (Unlawful Activities Prevention Act). Ministry of Home Affairs and Ministry of External Affairs manage designations. India does not have robust autonomous sanctions programs — mainly UN-mandated implementation.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🇸🇬 Singapore — MAS</div>
+      <p style="font-size:13px">Monetary Authority of Singapore (MAS) enforces sanctions. Singapore implements UN sanctions and maintains its own designations under the Terrorism (Suppression of Financing) Act. MAS issues detailed guidance for FIs.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🏦 FATF Connection</div>
+      <p style="font-size:13px">FATF Recommendations 6 & 7 specifically address Targeted Financial Sanctions (TFS) — R.6 for terrorism/financing, R.7 for proliferation financing. Countries must implement these without delay (within hours of UNSCR designation).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LISTS ═══════════════════ -->
+<section id="lists">
+  <div class="hero">
+    <div class="hero-tag">Module 4</div>
+    <h1>Sanctions <span>Lists</span></h1>
+    <p>Every authority maintains lists. Knowing which list does what — and the difference between them — is core to screening work.</p>
+  </div>
+
+  <h2>🇺🇸 OFAC Lists</h2>
+  <table>
+    <tr><th>List Name</th><th>Full Name</th><th>What It Means</th><th>Action Required</th></tr>
+    <tr>
+      <td><code>SDN</code></td>
+      <td>Specially Designated Nationals and Blocked Persons List</td>
+      <td>The primary OFAC list. Individuals, entities, vessels, aircraft owned/controlled by/acting on behalf of sanctioned countries OR designated terrorists, drug traffickers, proliferators.</td>
+      <td>BLOCK all assets. Reject all dealings.</td>
+    </tr>
+    <tr>
+      <td><code>CAPTA</code></td>
+      <td>Correspondent Account or Payable-Through Account Sanctions List</td>
+      <td>Foreign financial institutions subject to correspondent/payable-through account sanctions. Less severe than SDN.</td>
+      <td>Cannot open/maintain correspondent or payable-through accounts.</td>
+    </tr>
+    <tr>
+      <td><code>SSI</code></td>
+      <td>Sectoral Sanctions Identifications List</td>
+      <td>Entities in Russian energy, finance, defense sectors. Not a full SDN ban — only specific transaction types prohibited.</td>
+      <td>No new debt/equity transactions of specified maturity. NOT a full block.</td>
+    </tr>
+    <tr>
+      <td><code>FSE</code></td>
+      <td>Foreign Sanctions Evaders List</td>
+      <td>Foreign individuals and entities that have violated, attempted to violate, conspired to violate, or caused a violation of US sanctions.</td>
+      <td>US persons prohibited from dealing with FSE-listed parties.</td>
+    </tr>
+    <tr>
+      <td><code>CMIC</code></td>
+      <td>Chinese Military-Industrial Complex List</td>
+      <td>Chinese military companies. US persons prohibited from purchasing/selling publicly traded securities.</td>
+      <td>No securities transactions (buying or selling).</td>
+    </tr>
+    <tr>
+      <td><code>NS-MBS</code></td>
+      <td>Non-SDN Menu-Based Sanctions List</td>
+      <td>Catch-all list for parties subject to one or more non-SDN sanctions — a newer OFAC list.</td>
+      <td>Depends on specific sanctions applicable to the listed party.</td>
+    </tr>
+    <tr>
+      <td><code>PLC</code></td>
+      <td>Palestinian Legislative Council List</td>
+      <td>Members/delegates of the PLC who are not members of Hamas.</td>
+      <td>Specific restrictions apply.</td>
+    </tr>
+  </table>
+
+  <div class="callout callout-gold">
+    <strong>The 50% Rule (OFAC) — Critical for Screening</strong>
+    Any entity <strong>50% or more owned</strong> by one or more SDN-listed parties is itself considered blocked — even if NOT explicitly named on the SDN list. This makes beneficial ownership screening essential. You must look through ownership chains.
+  </div>
+
+  <h2>Other Key Lists</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🌐 UN Consolidated List</div>
+      <p style="font-size:13px">Maintained by UN Security Council. Covers Al-Qaida/ISIL (1267 Committee), Taliban (1988 Committee), and country-specific programs. Available at un.org/securitycouncil/sanctions/materials. Binding on all UN members.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🇪🇺 EU Consolidated List</div>
+      <p style="font-size:13px">Available at eeas.europa.eu/topics/sanctions-policy. Includes all EU restrictive measures. Separate from OFAC and UN. Post-Brexit UK has its own separate list too. Always screen all three for multi-jurisdiction exposure.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🇬🇧 UK HMT/OFSI Consolidated List</div>
+      <p style="font-size:13px">Available at assets.publishing.service.gov.uk. UK's post-Brexit autonomous list. Sometimes identical to EU, sometimes differs. The UK Global Human Rights Sanctions Regime added individuals EU/US hadn't designated.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🇺🇸 Commerce Department Lists</div>
+      <p style="font-size:13px">BIS (Bureau of Industry and Security) maintains: Entity List, Denied Persons List, Unverified List, Military End-User List. Separate from OFAC — focuses on exports of controlled goods/technology.</p>
+    </div>
+  </div>
+
+  <h2>Screening Tool Context</h2>
+  <div class="card">
+    <div class="card-title">CLEAR by Thomson Reuters (Your Tool)</div>
+    <p style="font-size:13px">CLEAR aggregates data from OFAC, UN, EU, HMT/OFSI, AUSTRAC, and dozens of other global watchlists. When you screen a name in CLEAR, it cross-references multiple lists simultaneously and returns risk scores, adverse media, PEP flags, and sanction hits.</p>
+    <ul style="margin-top:8px">
+      <li>World-Check is Thomson Reuters' dedicated sanctions/PEP database (used globally)</li>
+      <li>CLEAR also pulls public records, corporate filings, adverse news</li>
+      <li>Match scores — high/medium/low confidence based on name similarity algorithms</li>
+      <li>Always document your match/no-match rationale when closing alerts</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════ PROGRAMS ═══════════════════ -->
+<section id="programs">
+  <div class="hero">
+    <div class="hero-tag">Module 5</div>
+    <h1>Key Sanctions <span>Programs</span></h1>
+    <p>The most significant country-level programs you'll encounter in payment gateway and banking contexts.</p>
+  </div>
+
+  <details open>
+    <summary>🇮🇷 Iran Sanctions — The Most Complex Program</summary>
+    <div class="details-body">
+      <p>Iran is subject to one of the most expansive US sanctions programs. The Iranian Transactions and Sanctions Regulations (ITSR) and multiple Executive Orders apply.</p>
+      <div class="grid-2" style="margin-top:12px">
+        <div>
+          <strong style="color:#fff;font-size:13px;">What's Blocked:</strong>
+          <ul><li>Almost all trade and investment</li><li>Iranian government-related transactions</li><li>Transactions with IRGC (Islamic Revolutionary Guard Corps)</li><li>Iranian banking sector</li><li>Oil/energy sector (major focus)</li></ul>
+        </div>
+        <div>
+          <strong style="color:#fff;font-size:13px;">Secondary Sanctions:</strong>
+          <ul><li>Non-US companies that buy Iranian oil face sanctions</li><li>Foreign banks that do business with Iran can be cut off from US financial system</li><li>This led European banks to fully exit Iranian business</li></ul>
+        </div>
+      </div>
+      <div class="callout callout-gold" style="margin-top:12px">
+        <strong>JCPOA Context</strong>
+        The 2015 Joint Comprehensive Plan of Action (Iran nuclear deal) temporarily lifted some sanctions. US withdrew in 2018 under Trump. Biden re-engaged but full deal remains unresolved. Sanctions currently reimposed at maximum pressure levels.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>🇷🇺 Russia Sanctions — Massively Expanded Post-2022</summary>
+    <div class="details-body">
+      <p>Russia sanctions expanded dramatically following the February 2022 invasion of Ukraine. The US, EU, UK, Canada, Japan, and others imposed coordinated, unprecedented sanctions.</p>
+      <div class="grid-2" style="margin-top:12px">
+        <div>
+          <strong style="color:#fff;font-size:13px;">What's Covered:</strong>
+          <ul>
+            <li>Central Bank of Russia (CBR) — frozen ~$300B in reserves</li>
+            <li>Major banks: Sberbank, VTB, Gazprombank, Alfa-Bank</li>
+            <li>Russian sovereign debt — new transactions prohibited</li>
+            <li>Energy sector — phased restrictions</li>
+            <li>Luxury goods export ban</li>
+            <li>Swift disconnection of major Russian banks</li>
+            <li>Hundreds of oligarchs, Putin associates</li>
+          </ul>
+        </div>
+        <div>
+          <strong style="color:#fff;font-size:13px;">SDN + SSI Mix:</strong>
+          <ul>
+            <li>Many Russian entities on both SDN and SSI lists</li>
+            <li>Need to check both for each counterparty</li>
+            <li>The 50% rule critical — many Russian oligarchs own holding companies</li>
+            <li>Shell companies in UAE, Cyprus, BVI used for evasion</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>🇰🇵 North Korea (DPRK) — Most Comprehensive</summary>
+    <div class="details-body">
+      <p>North Korea is subject to near-total sanctions under both UN and US programs, focused on WMD/missile proliferation financing.</p>
+      <ul>
+        <li>All DPRK government-linked entities and individuals blocked</li>
+        <li>Coal, iron, seafood exports banned (major revenue sources)</li>
+        <li>Overseas North Korean workers — payments to NK government prohibited</li>
+        <li>DPRK increasingly uses crypto (Lazarus Group hacks) to evade sanctions</li>
+        <li>Correspondent banking through Chinese banks is a common evasion route</li>
+      </ul>
+      <div class="callout callout-red" style="margin-top:12px">
+        <strong>Red Flag for Payment Gateways</strong>
+        DPRK-linked actors infiltrate global fintech/payment companies. Fake IDs, VPNs, shell companies in Southeast Asia. If a payment gateway processes transactions for North Korean nationals under false identities, it's a serious sanctions violation.
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>🇨🇺 Cuba Sanctions — OFAC's Oldest Program</summary>
+    <div class="details-body">
+      <p>Cuba sanctions date back to the 1960s under the Cuban Assets Control Regulations (CACR). One of the most comprehensive programs.</p>
+      <ul>
+        <li>Nearly all transactions with Cuba prohibited</li>
+        <li>Cuban nationals' US assets are blocked</li>
+        <li>Obama-era partial relaxation (2015-2016) was substantially reversed by Trump</li>
+        <li>Key exception: travel for specific purposes (journalism, family, educational) may be permitted</li>
+        <li>US banks cannot process USD transactions transiting through Cuba</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🇸🇾 Syria Sanctions</summary>
+    <div class="details-body">
+      <p>Comprehensive US sanctions against Syria in response to Assad regime atrocities and civil war. Syrian Sanctions Regulations (SySR).</p>
+      <ul>
+        <li>All property of Syrian government blocked</li>
+        <li>Petroleum imports from Syria banned</li>
+        <li>US persons prohibited from new investment in Syria</li>
+        <li>Syrian financial sector extensively sanctioned</li>
+        <li>Caesar Syria Civilian Protection Act (2019) added additional sanctions</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Others to Know</summary>
+    <div class="details-body">
+      <div class="grid-2">
+        <div>
+          <strong style="color:var(--accent2); font-size:12px;">Venezuela</strong>
+          <ul>
+            <li>Maduro regime, PDVSA (state oil company)</li>
+            <li>Gold sector sanctions</li>
+            <li>Government debt/equity ban</li>
+          </ul>
+          <strong style="color:var(--accent2); font-size:12px; margin-top:12px; display:block;">Myanmar / Burma</strong>
+          <ul>
+            <li>Military coup 2021 triggered expanded sanctions</li>
+            <li>Military junta, state-owned enterprises</li>
+            <li>Jade, gems sector restricted</li>
+          </ul>
+        </div>
+        <div>
+          <strong style="color:var(--accent2); font-size:12px;">Narcotics Programs</strong>
+          <ul>
+            <li>Kingpin Act — Mexican/Colombian cartels</li>
+            <li>SDNTK (SDN Narcotics Trafficking Kingpin)</li>
+            <li>Major cartels: Sinaloa, CJNG, Gulf</li>
+          </ul>
+          <strong style="color:var(--accent2); font-size:12px; margin-top:12px; display:block;">Global Terrorism</strong>
+          <ul>
+            <li>Al-Qaida, ISIL/ISIS, Hamas, Hezbollah</li>
+            <li>EO 13224 — Blocking Terrorist Property</li>
+            <li>SDGT designation (SDN-Terrorist)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════════ KEY CONCEPTS ═══════════════════ -->
+<section id="concepts">
+  <div class="hero">
+    <div class="hero-tag">Module 6</div>
+    <h1>Key Sanctions <span>Concepts</span></h1>
+    <p>The technical concepts that matter in day-to-day screening, QC review, and CAMS exam scenarios.</p>
+  </div>
+
+  <h2>The 50% Rule</h2>
+  <div class="card">
+    <div class="card-title"><span class="tag tag-red">CRITICAL</span> OFAC's 50% Rule</div>
+    <p style="font-size:13px">Any entity <strong style="color:#fff">50% or more owned</strong> — directly or indirectly — by one or more SDN-listed persons is itself subject to the same prohibitions as if it were on the SDN list, even if not explicitly listed.</p>
+    <div class="flow" style="margin-top:12px">
+      <div class="flow-step">SDN-Listed Person<br>(Person A)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Owns 51%<br>of Company X</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Company X =<br>BLOCKED</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Company X owns 60%<br>of Company Y</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Company Y =<br>ALSO BLOCKED</div>
+    </div>
+    <p style="font-size:12px; color:var(--muted); margin-top:8px">The chain extends: if an SDN owns 50%+ of X, and X owns 50%+ of Y, then Y is also blocked — even though Y is two levels removed.</p>
+  </div>
+
+  <h2>Licenses — How to Transact in Prohibited Areas</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="tag tag-teal">GL</span> General License (GL)</div>
+      <p style="font-size:13px">Published by OFAC in advance. Pre-authorises categories of transactions that would otherwise be prohibited. No need to apply — you just need to confirm you qualify.</p>
+      <ul style="margin-top:8px">
+        <li>Example: GL allowing food/medicine to Cuba</li>
+        <li>Example: GL for personal remittances to Iran</li>
+        <li>Example: GL allowing news gathering in sanctioned countries</li>
+        <li>Always check if a GL exists before concluding a transaction is impossible</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="tag tag-gold">SL</span> Specific License (SL)</div>
+      <p style="font-size:13px">Must be applied for from OFAC for individual transactions/circumstances. OFAC reviews and approves case-by-case. Takes weeks to months.</p>
+      <ul style="margin-top:8px">
+        <li>Humanitarian aid organisations often seek SLs</li>
+        <li>Lawyers representing SDN clients may seek SL for legal fees</li>
+        <li>Wind-down of existing contracts may be licensed</li>
+        <li>Grant of license is OFAC's discretion — not guaranteed</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Evasion Red Flags & Typologies</h2>
+  <div class="card">
+    <table>
+      <tr><th>Red Flag</th><th>What It Signals</th></tr>
+      <tr><td>Payments involving third countries with no logical connection to the trade</td><td>Possible transit routing to evade jurisdiction detection</td></tr>
+      <tr><td>Use of shell companies in non-transparent jurisdictions (BVI, Seychelles)</td><td>Obscuring UBO who may be sanctioned</td></tr>
+      <tr><td>Inconsistent trade documentation (invoices don't match goods)</td><td>Trade-based sanctions evasion</td></tr>
+      <tr><td>Payments from/to banks in jurisdictions used as pass-through (Turkey, UAE, China)</td><td>Correspondent banking misuse for sanctions bypass</td></tr>
+      <tr><td>Reluctance to provide UBO information</td><td>Possible SDN-linked beneficial owner</td></tr>
+      <tr><td>Counterparty uses generic descriptors ("Service Fee", "Consulting")</td><td>Concealing nature of sanctioned-party transaction</td></tr>
+      <tr><td>IP address from sanctioned country but customer claims different address</td><td>VPN usage, false location declaration</td></tr>
+      <tr><td>Use of cryptocurrency to settle transactions</td><td>Crypto increasingly used by DPRK, Iran to evade sanctions</td></tr>
+      <tr><td>Multiple wire transfers just below round numbers to sanctioned country nationals</td><td>Structuring to avoid detection</td></tr>
+    </table>
+  </div>
+
+  <h2>Designated vs. Non-Designated — What "Nexus" Means</h2>
+  <div class="callout callout-purple">
+    <strong>US Nexus Rule</strong>
+    A US nexus exists when a transaction: (1) involves a US person, (2) is processed through a US financial institution, (3) uses USD (even between two non-US parties), or (4) involves US-origin goods. If any of these exist, OFAC jurisdiction applies to the entire transaction.
+  </div>
+
+  <h2>Tipping Off — Sanctions Version</h2>
+  <div class="card">
+    <div class="card-title">Do Not Tip Off a Sanctioned Party</div>
+    <p style="font-size:13px">When you block funds or reject a transaction involving a sanctions hit, <strong style="color:#fff">do not tell the customer why</strong>. This could amount to tipping off — alerting a sanctioned party that they have been identified. Similar principle to AML SAR tipping-off prohibitions.</p>
+    <p style="font-size:13px">You should block/reject, file required reports, and give a generic decline reason if any is given at all.</p>
+  </div>
+
+  <h2>Sunset Clauses & Delisting</h2>
+  <div class="card">
+    <p style="font-size:13px">Sanctioned parties can petition for delisting (SDN Review process at OFAC). Grounds: misidentification, case of mistaken identity, changed circumstances. OFAC may also proactively delist when the policy objective is met.</p>
+    <p style="font-size:13px">For UN list, the UN Ombudsperson handles delisting requests from individuals (for 1267/2253 Al-Qaida list).</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ SCREENING ═══════════════════ -->
+<section id="screening">
+  <div class="hero">
+    <div class="hero-tag">Module 7</div>
+    <h1>Sanctions <span>Screening</span></h1>
+    <p>How sanctions screening works in practice — from system logic to false positives to alert disposition.</p>
+  </div>
+
+  <h2>The Screening Process — End to End</h2>
+  <div class="flow" style="flex-direction:column; align-items:flex-start; gap:0">
+    <div style="display:flex; align-items:center; gap:12px; padding:10px 0">
+      <div class="flow-step" style="width:160px; text-align:center; flex-shrink:0">Customer/Transaction<br>Data Input</div>
+      <span style="color:var(--muted); font-size:13px;">Name, DOB, address, entity name, account number, transaction parties</span>
+    </div>
+    <div style="color:var(--accent); padding:0 70px; font-size:20px;">↓</div>
+    <div style="display:flex; align-items:center; gap:12px; padding:10px 0">
+      <div class="flow-step" style="width:160px; text-align:center; flex-shrink:0">Fuzzy Match<br>Algorithm</div>
+      <span style="color:var(--muted); font-size:13px;">System compares against SDN/UN/EU lists using name matching, alias matching, transliteration variations, soundex, Levenshtein distance</span>
+    </div>
+    <div style="color:var(--accent); padding:0 70px; font-size:20px;">↓</div>
+    <div style="display:flex; align-items:center; gap:12px; padding:10px 0">
+      <div class="flow-step" style="width:160px; text-align:center; flex-shrink:0">Alert Generated</div>
+      <span style="color:var(--muted); font-size:13px;">System generates alert with match score (high/medium/low). Multiple possible matches may appear.</span>
+    </div>
+    <div style="color:var(--accent); padding:0 70px; font-size:20px;">↓</div>
+    <div style="display:flex; align-items:center; gap:12px; padding:10px 0">
+      <div class="flow-step" style="width:160px; text-align:center; flex-shrink:0">Analyst Review</div>
+      <span style="color:var(--muted); font-size:13px;">Compare identifying details: DOB, nationality, address, ID numbers, aliases, photos if available</span>
+    </div>
+    <div style="color:var(--accent); padding:0 70px; font-size:20px;">↓</div>
+    <div style="display:flex; align-items:center; gap:12px; padding:10px 0">
+      <div class="flow-step" style="width:160px; text-align:center; flex-shrink:0">True Match or<br>False Positive?</div>
+      <span style="color:var(--muted); font-size:13px;">If true match: block/reject + escalate. If false positive: document clearly with rationale and close alert.</span>
+    </div>
+  </div>
+
+  <h2>True Match vs. False Positive</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="tag tag-red">TRUE MATCH</span></div>
+      <ul>
+        <li>Name + DOB match or name + nationality + country match</li>
+        <li>Same ID number (passport/national ID)</li>
+        <li>Multiple corroborating factors align</li>
+        <li>Subject claims to be from the same city as the SDN entry</li>
+      </ul>
+      <p style="font-size:12px; margin-top:10px; color:var(--accent3);">Action: Block/Reject. Escalate immediately. Do not process.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="tag tag-teal">FALSE POSITIVE</span></div>
+      <ul>
+        <li>Same name but different DOB, nationality, or address</li>
+        <li>Common name (e.g., "Ali Hassan" — millions have this name)</li>
+        <li>Name transliteration variant only — all other details differ</li>
+        <li>Company name match but different country, registration number</li>
+      </ul>
+      <p style="font-size:12px; margin-top:10px; color:var(--accent2);">Action: Document rationale. Close with clear justification. Retain records.</p>
+    </div>
+  </div>
+
+  <h2>Match Quality Factors</h2>
+  <table>
+    <tr><th>Factor</th><th>Strong Evidence of True Match</th><th>Strong Evidence of False Positive</th></tr>
+    <tr><td>Name</td><td>Exact match including middle name</td><td>Common surname only, transliteration difference</td></tr>
+    <tr><td>DOB</td><td>Same DOB</td><td>Different DOB (strong discriminator)</td></tr>
+    <tr><td>Nationality</td><td>Same as listed</td><td>Different nationality</td></tr>
+    <tr><td>ID Numbers</td><td>Matching passport/national ID</td><td>Completely different ID numbers</td></tr>
+    <tr><td>Address</td><td>Same city/country as listed</td><td>Different country entirely</td></tr>
+    <tr><td>Gender</td><td>Same gender</td><td>Different gender</td></tr>
+    <tr><td>Aliases</td><td>Customer known by listed alias</td><td>No alias overlap</td></tr>
+  </table>
+
+  <div class="callout callout-gold">
+    <strong>Screening Best Practices from Your QC Work</strong>
+    When reviewing a false positive clearance, check: (1) Was the rationale detailed enough? (2) Did the analyst compare DOB, nationality, and address — not just name? (3) Did the analyst cite specific differences? (4) Is the documentation sufficient to defend the decision in a regulatory exam?
+  </div>
+
+  <h2>PEP Screening vs. Sanctions Screening</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">PEP (Politically Exposed Person)</div>
+      <p style="font-size:13px">Not a sanction — a risk category requiring EDD. A PEP is a senior public official with heightened money laundering risk. Being a PEP is NOT illegal. You must apply enhanced monitoring, not block.</p>
+      <p style="font-size:13px; color:var(--accent2); margin-top:8px">PEP + Adverse Media + Sanctions Program = Extremely High Risk. Escalate.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Sanctions Hit</div>
+      <p style="font-size:13px">A legal prohibition. Dealing with a sanctioned party is illegal. No risk-based decision — you must block/reject regardless of any other factor.</p>
+      <p style="font-size:13px; color:var(--accent3); margin-top:8px">You cannot "manage the risk" of a sanctions hit. It is a strict legal prohibition, not a risk score.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ COMPLIANCE ═══════════════════ -->
+<section id="compliance">
+  <div class="hero">
+    <div class="hero-tag">Module 8</div>
+    <h1>Sanctions Compliance <span>Framework</span></h1>
+    <p>How a robust sanctions compliance program is built — OFAC's 5 pillars and practical implementation.</p>
+  </div>
+
+  <h2>OFAC's 5 Essential Components of a Sanctions Compliance Program</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">1. Management Commitment</div>
+      <ul>
+        <li>Senior management and Board explicitly support sanctions compliance</li>
+        <li>Resources allocated for screening tools, staff, training</li>
+        <li>Culture of compliance from the top</li>
+        <li>Designated Chief Compliance Officer with direct Board access</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">2. Risk Assessment</div>
+      <ul>
+        <li>Identify customers, products, services, geographies with sanctions risk</li>
+        <li>Assess risk from customers in high-risk jurisdictions</li>
+        <li>Assess risk in payment corridors (origin/destination countries)</li>
+        <li>Review regularly — sanctions landscape changes frequently</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">3. Internal Controls</div>
+      <ul>
+        <li>Sanctions screening at onboarding AND ongoing</li>
+        <li>Transaction monitoring with sanctions filters</li>
+        <li>Policies and procedures documented and updated</li>
+        <li>Blocking/rejection procedures clearly defined</li>
+        <li>Escalation matrix and response protocols</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">4. Testing & Auditing</div>
+      <ul>
+        <li>Independent testing of screening systems (name variations, aliases)</li>
+        <li>Regular audit of compliance procedures</li>
+        <li>Transaction sampling and quality review</li>
+        <li>Third-party audit recommended for high-risk institutions</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">5. Training</div>
+    <ul>
+      <li>All relevant staff trained on sanctions risks and obligations</li>
+      <li>Role-specific training (front-line vs. compliance vs. senior management)</li>
+      <li>Annual training at minimum; more frequently when programs change</li>
+      <li>Training records maintained</li>
+    </ul>
+  </div>
+
+  <h2>Voluntary Self-Disclosure (VSD) to OFAC</h2>
+  <div class="callout callout-teal">
+    <strong>Why VSD Matters</strong>
+    If your institution discovers a sanctions violation, proactively reporting it to OFAC (VSD) can reduce civil monetary penalties by up to 50%. OFAC views voluntary disclosure as a significant mitigating factor. Concealing violations is treated far more harshly.
+  </div>
+
+  <h2>Three Lines of Defence — Sanctions Context</h2>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">1st Line — Business</div>
+      <p style="font-size:13px">Front-line staff, operations, customer onboarding. They run initial screening, flag issues, follow escalation procedures. They own the risk.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">2nd Line — Compliance</div>
+      <p style="font-size:13px">Sanctions compliance team. Sets policies, provides guidance, reviews alerts, makes final blocking/rejection decisions, files reports to OFAC/regulators. Your QC function sits here.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">3rd Line — Audit</div>
+      <p style="font-size:13px">Internal and external audit. Tests whether the compliance program is actually working. Independently validates screening system accuracy and procedural adherence.</p>
+    </div>
+  </div>
+
+  <h2>Blocking Reports to OFAC</h2>
+  <div class="card">
+    <p style="font-size:13px">When a US institution blocks property (freezes funds) of a sanctioned party, it must:</p>
+    <ul>
+      <li>Report to OFAC within <strong style="color:#fff">10 business days</strong> of blocking</li>
+      <li>File an annual report (every June 30) disclosing all blocked property</li>
+      <li>Hold blocked funds in a separate, interest-bearing account</li>
+      <li>Cannot use, transfer, or return blocked funds without OFAC license</li>
+    </ul>
+    <div class="callout callout-gold" style="margin-top:12px">
+      <strong>Rejection vs. Blocking Report</strong>
+      Rejected transactions (returned to sender) must be reported within 10 business days but are NOT included in annual blocked property reports. Blocked funds ARE included in annual reports. Different treatment.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PENALTIES ═══════════════════ -->
+<section id="penalties">
+  <div class="hero">
+    <div class="hero-tag">Module 9</div>
+    <h1>Penalties &amp; <span>Enforcement</span></h1>
+    <p>What happens when sanctions are violated — civil penalties, criminal prosecution, and landmark cases.</p>
+  </div>
+
+  <h2>OFAC Civil Penalties (Updated 2024)</h2>
+  <table>
+    <tr><th>Violation Type</th><th>Maximum Penalty</th></tr>
+    <tr><td>Most violations</td><td>Greater of $368,136 per violation OR twice the transaction value</td></tr>
+    <tr><td>Willful/egregious violations</td><td>Greater of $1,078,670 per violation OR twice the transaction value</td></tr>
+    <tr><td>Cuba (CACR)</td><td>Up to $91,904 per violation</td></tr>
+    <tr><td>Criminal (willful)</td><td>Up to $1M fine + 20 years imprisonment per violation</td></tr>
+  </table>
+
+  <div class="callout callout-red">
+    <strong>Key: Each Transaction = One Violation</strong>
+    If a bank processed 10,000 prohibited transactions, that's potentially 10,000 separate violations. Penalties multiply rapidly — this is why enforcement actions reach hundreds of millions or billions.
+  </div>
+
+  <h2>Landmark Enforcement Cases</h2>
+
+  <details open>
+    <summary>BNP Paribas — $8.9 Billion (2014)</summary>
+    <div class="details-body">
+      <p>The largest sanctions-related penalty ever. BNP Paribas pleaded guilty to criminal charges of conspiracy for processing billions of dollars in transactions for clients in Sudan, Iran, and Cuba through US dollar payment channels — while systematically stripping out references to sanctioned parties from wire transfers.</p>
+      <ul>
+        <li>Processed ~$30B in transactions for sanctioned entities</li>
+        <li>Compliance staff were told to continue processing despite knowing about violations</li>
+        <li>Temporary suspension from USD clearing — extreme consequence</li>
+        <li>Criminal guilty plea — not just a civil settlement</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Standard Chartered — $1.1 Billion (2012, re-settled 2019)</summary>
+    <div class="details-body">
+      <p>Processed Iranian transactions through US correspondent accounts by stripping SWIFT messages of identifying information. Used U-turn transactions (Iran to bank A to US to bank B) that appeared to bypass sanctions but didn't after 2008 rule change.</p>
+      <ul>
+        <li>Initial $340M settlement in 2012, additional $1.1B in 2019 for repeat violations</li>
+        <li>DPA (Deferred Prosecution Agreement) — monitored for years</li>
+        <li>Lessons: fixing root cause matters; settling without fixing = second strike</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>HSBC — $1.9 Billion (2012)</summary>
+    <div class="details-body">
+      <p>While primarily an AML case (Mexican cartel money laundering), HSBC also violated Iran, Libya, Cuba, Burma, and Sudan sanctions by processing transactions for banks that were themselves sanctioned. Used as case study in both AML and sanctions failures.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>UniCredit — $1.3 Billion (2019)</summary>
+    <div class="details-body">
+      <p>UniCredit subsidiaries in Germany, Austria, and Italy processed transactions involving Iran, Libya, Myanmar, Cuba, and Syria through US correspondent accounts. Used "non-cooperative counterparty" designations to prevent screening tools from flagging transactions.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>BitPay / Crypto Enforcement — Growing Focus</summary>
+    <div class="details-body">
+      <p>OFAC has increasingly targeted crypto. BitPay (2021) settled for $507K for apparent violations — allowing users from sanctioned jurisdictions (Cuba, Iran, North Korea, Crimea, Sudan, Syria) to transact using IP address data the company had. Crypto exchanges screening IP addresses at login is now a sanctions requirement.</p>
+    </div>
+  </details>
+
+  <h2>OFAC Factors in Penalty Determination</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🔻 Mitigating Factors (reduce penalty)</div>
+      <ul>
+        <li>Voluntary self-disclosure (VSD)</li>
+        <li>Lack of prior violations</li>
+        <li>Remediation steps taken</li>
+        <li>Cooperation with OFAC investigation</li>
+        <li>Minimal harm to sanctions program objectives</li>
+        <li>No knowledge of violation at time</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🔺 Aggravating Factors (increase penalty)</div>
+      <ul>
+        <li>Willful or reckless conduct</li>
+        <li>Prior sanctions violations</li>
+        <li>Senior management awareness/involvement</li>
+        <li>Significant harm to sanctions program</li>
+        <li>Deceptive practices (stripping SWIFT fields)</li>
+        <li>Large volume/value of transactions</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CAMS PREP ═══════════════════ -->
+<section id="cams">
+  <div class="hero">
+    <div class="hero-tag">Module 10</div>
+    <h1>CAMS Exam <span>Prep — Sanctions</span></h1>
+    <p>High-yield concepts, likely exam angles, and rapid-fire Q&A for July 2026.</p>
+  </div>
+
+  <div class="cams-pill">CAMS Exam Focus Area · July 2026</div>
+
+  <h2>Which CAMS Domain Covers Sanctions?</h2>
+  <div class="card">
+    <p style="font-size:13px">Sanctions primarily appear in <strong style="color:#fff">Domain 3 (AML/CTF Programs and Controls)</strong> and <strong style="color:#fff">Domain 1 (Risks and Methods of ML/TF)</strong> of the CAMS exam. Expect 10-15 sanctions-related questions in a 120-question exam.</p>
+    <p style="font-size:13px; margin-top:8px">Key focus areas: SDN list, 50% rule, block vs. reject, OFAC vs. FinCEN, FATF Recommendations 6 & 7, licensing, reporting timelines.</p>
+  </div>
+
+  <h2>Rapid-Fire Q&A</h2>
+
+  <details>
+    <summary>Q: What is the difference between OFAC and FinCEN?</summary>
+    <div class="details-body">OFAC (Office of Foreign Assets Control) administers sanctions — it's about prohibiting transactions with designated parties and countries. FinCEN (Financial Crimes Enforcement Network) administers AML/CTF regulations — it's about detecting and reporting suspicious activity (SARs, CTRs, BSA compliance). Both are under US Treasury but entirely different functions. Sanctions = OFAC. SAR = FinCEN.</div>
+  </details>
+
+  <details>
+    <summary>Q: You receive a wire transfer where the originating bank is on the OFAC SDN list. What do you do?</summary>
+    <div class="details-body">BLOCK the funds. Do not process, reject, or return. Place funds in a segregated interest-bearing account. Report to OFAC within 10 business days. Do NOT tip off the customer. File appropriate internal reports and escalate to compliance/legal.</div>
+  </details>
+
+  <details>
+    <summary>Q: What is the 50% rule and why does it matter?</summary>
+    <div class="details-body">OFAC's 50% rule: any entity 50% or more owned (directly or indirectly) by one or more SDN-listed persons is ALSO subject to SDN-level blocking — even if not explicitly listed. This is critical because sanctioned parties often create shell companies to appear legitimate. You must look through ownership chains and screen beneficial owners, not just the entity name itself.</div>
+  </details>
+
+  <details>
+    <summary>Q: What is the difference between a General License and a Specific License?</summary>
+    <div class="details-body">General License (GL): pre-approved by OFAC for categories of transactions — no application needed, just qualify and comply. Example: GL allowing humanitarian aid. Specific License (SL): must be individually applied for from OFAC for a particular transaction. Takes time and OFAC may deny. Used when no GL exists and there is a legitimate reason to transact with an otherwise prohibited party.</div>
+  </details>
+
+  <details>
+    <summary>Q: A customer's name matches an entry on the SDN list but the DOB is different. What should you do?</summary>
+    <div class="details-body">This is likely a false positive — but you must document your analysis. Compare: DOB, nationality, address, ID numbers, gender, and any aliases. A different DOB alone is strong evidence of false positive, especially with a common name. Document each point of differentiation with rationale, clear the alert, and retain documentation. If other factors point toward a match (same country, similar address), escalate for further review before clearing.</div>
+  </details>
+
+  <details>
+    <summary>Q: What are FATF Recommendations 6 and 7?</summary>
+    <div class="details-body">R.6: Targeted Financial Sanctions (TFS) related to Terrorism and Terrorism Financing. Countries must implement UN Security Council resolutions requiring freezing of terrorist assets WITHOUT DELAY — meaning same day or next day of UNSC designation. R.7: TFS related to Proliferation Financing (WMD). Same without-delay requirement for proliferation-linked designations. Both require countries to freeze assets, prohibit transactions, and avoid tipping off designated parties.</div>
+  </details>
+
+  <details>
+    <summary>Q: What does "blocking" mean vs. "rejecting" a transaction?</summary>
+    <div class="details-body">BLOCKING: The funds are frozen/held in a segregated account. This applies to SDN-listed parties — you cannot return the funds or process them without OFAC license. Must report within 10 business days. REJECTING: The transaction is returned to the originator without processing. Applies to prohibited jurisdictions or transactions where blocking is not required. Must report within 10 business days. Key: SDN = block. Jurisdiction restriction (non-SDN) = may be reject.</div>
+  </details>
+
+  <details>
+    <summary>Q: Can a sanctioned party do anything to access blocked funds?</summary>
+    <div class="details-body">Yes — they can apply for a Specific License from OFAC. OFAC may grant a license for legitimate purposes (e.g., covering basic living expenses, medical emergencies). The institution holding blocked funds cannot release them without OFAC authorisation via specific license. Blocked funds must also be reported in the annual blocked property report filed each June 30.</div>
+  </details>
+
+  <details>
+    <summary>Q: What is "stripping" and why is it serious?</summary>
+    <div class="details-body">Stripping is the deliberate removal of identifying information from payment messages (e.g., SWIFT MT messages) to prevent screening systems from detecting a sanctioned party's involvement. Example: removing "Islamic Republic of Iran" from the originator field before passing through a US correspondent bank. This is the most egregious form of sanctions violation and has resulted in criminal charges and the largest penalty cases (BNP Paribas, Standard Chartered, UniCredit). It transforms an inadvertent violation into a wilful criminal act.</div>
+  </details>
+
+  <h2>Key Numbers to Memorise</h2>
+  <div class="grid-3">
+    <div class="card"><div class="stat-num" style="font-size:18px;">10 days</div><div style="font-size:12px; color:var(--muted);">OFAC blocking report deadline</div></div>
+    <div class="card"><div class="stat-num" style="font-size:18px;">50%</div><div style="font-size:12px; color:var(--muted);">Ownership threshold for SDN extension rule</div></div>
+    <div class="card"><div class="stat-num" style="font-size:18px;">Jun 30</div><div style="font-size:12px; color:var(--muted);">Annual blocked property report deadline</div></div>
+    <div class="card"><div class="stat-num" style="font-size:18px;">50%</div><div style="font-size:12px; color:var(--muted);">Penalty reduction for Voluntary Self-Disclosure</div></div>
+    <div class="card"><div class="stat-num" style="font-size:18px;">R.6 & R.7</div><div style="font-size:12px; color:var(--muted);">FATF Recs for terrorism & proliferation TFS</div></div>
+    <div class="card"><div class="stat-num" style="font-size:18px;">$8.9B</div><div style="font-size:12px; color:var(--muted);">Largest OFAC penalty (BNP Paribas, 2014)</div></div>
+  </div>
+
+  <div class="verdict">
+    <div class="verdict-title">CAMS Exam Strategy for Sanctions</div>
+    <p style="font-size:13px">When answering sanctions questions: first ask yourself <em>is this an SDN situation (block) or a jurisdiction situation (reject)?</em> Then ask <em>is there a license or exemption?</em> Then consider <em>what are the reporting obligations?</em> CAMS exam rarely asks you to know specific country names — they want you to know the concepts: strict liability, block vs. reject, 50% rule, tipping-off prohibition, and reporting timelines.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
